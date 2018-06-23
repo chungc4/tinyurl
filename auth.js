@@ -17,8 +17,12 @@ var params = {
 
 module.exports = function(){
     var strategy = new JwtStrategy(params, function(payload, done){
+        console.log(payload)
         User.findOne({id:payload.id}, function(err, user){
-            if(err){
+            if (err) {
+                return done(err, false)
+            }
+            if(user){
                 done(null, user);
             } else {
                 done(null, false);
